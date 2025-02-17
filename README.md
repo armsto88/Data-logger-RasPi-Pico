@@ -25,7 +25,8 @@ Planned improvements for future versions include enhanced wireless communication
 
 # Build Overview
 
-(Instructions on setting up, installing sensors, and configuring data storage and WiFi connectivity should be added here.)
+[Build Overview](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY/blob/main/Build_Overview.md)
+
 
 ## Contributions
 
