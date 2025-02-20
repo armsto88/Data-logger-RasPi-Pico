@@ -1,4 +1,6 @@
-#Build Overview
+# Build Overview
+
+----
 
 This Pico-based Data Logger is a low-power, autonomous environmental monitoring system. It incorporates a Raspberry Pi Pico WH, multiple sensors, power management circuits, and data storage components to ensure efficient and reliable data collection. Below is a comprehensive breakdown of the hardware components, along with step-by-step assembly instructions.
 
@@ -50,13 +52,12 @@ This Pico-based Data Logger is a low-power, autonomous environmental monitoring 
  
 
 
-  ### **Step-by-Step Assembly**  
+  ## **Step-by-Step Assembly**  
 
-#### **1. Setting Up the Raspberry Pi Pico WH**  
+### **1. Setting Up the Raspberry Pi Pico WH**  
 
 The Raspberry Pi Pico WH comes pre-soldered with headers, making it easier to connect components. However, if you are using a standard **Raspberry Pi Pico** (without pre-soldered headers), you will need to solder them manually before proceeding.  
 
----
 
 ### **Soldering the Headers (If Necessary)**  
 If you are using a **Raspberry Pi Pico (non-WH version)** without pre-soldered headers, follow these steps:  
@@ -107,7 +108,28 @@ Before the Pico WH can run your data logging program, you must install **MicroPy
 
 ---
 
-Making the auto-power off and voltage indicator circuits
+### **2. Modifications to the DS3231**
+
+Articles I have read, including this [blog](https://thecavepearlproject.org/2014/05/21/using-a-cheap-3-ds3231-rtc-at24c32-eeprom-from-ebay/), highlight the need for modifications to the DS3231 to ensure proper functionality when using its alarm as a trigger for the P-channel MOSFET.  
+
+The DS3231 includes pull-up resistors on the SQW (alarm) line, which must be removed. However, these resistors are part of a resistor block that also contains the necessary I2C lines (SCL, SDA). To compensate for their removal, external 4.7KΩ pull-up resistors must be reintroduced into the circuit to maintain proper operation. This modification provides greater control over the pull-up resistance for the SQW (alarm) line, ensuring reliable triggering.
+
+The other necessary modification is the removal of the charging circuit for the coin battery. The same [blog](https://thecavepearlproject.org/2014/05/21/using-a-cheap-3-ds3231-rtc-at24c32-eeprom-from-ebay/) mentioned earlier, along with other sources, recommends disabling this feature for safety reasons.  
+
+To achieve this, the charging resistor can be removed.  
+
+The image below highlights both resistors that should be removed. Applying heat and gentle pressure will quickly dislodge them. However, be careful not to apply excessive force, as this could damage the DS3231 or cause injury.
+
+
+
+
+
+### **3. Making the auto-power off and voltage indicator circuits**
+
+
+
+![Alt text](auto_off_voltage_divider_bb.jpg)
+
 
 
 
