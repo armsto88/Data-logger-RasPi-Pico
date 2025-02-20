@@ -121,6 +121,8 @@ To achieve this, the charging resistor can be removed.
 The image below highlights both resistors that should be removed. Applying heat and gentle pressure will quickly dislodge them. However, be careful not to apply excessive force, as this could damage the DS3231 or cause injury.
 
 
+![Alt_text](ds3231_02.jpg)
+
 
 
 
