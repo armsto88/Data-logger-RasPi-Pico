@@ -7,45 +7,28 @@ import uos
 import onewire
 import ds18x20
 from micropython_shtc3 import shtc3
-from umqtt.simple import MQTTClient
 import json
 from ds3231 import DS3231, EVERY_MINUTE, EVERY_HOUR
 import gc
 
 # Constants
-UART_BAUDRATE = 115200
-APN = "iot.1nce.net"
 WEBHOOK_URL = "https://hook.eu1.make.com/cxyhxctngdmc1ohme35cxln7fi9s7rjm"
-LOG_FILE_NAME = "temperature_log.csv"
 TCA9548A_ADDRESS = 0x71
 AT_COMMAND_DELAY = 5
-
 i2c_0 = SoftI2C(scl=Pin(21), sda=Pin(20))
 rtc = DS3231(i2c_0) 
 i2c = I2C(1, sda=Pin(14), scl=Pin(15))
 sht = shtc3.SHTC3(i2c)
-
 led = machine.Pin("LED", machine.Pin.OUT)
 mosfet_gate = Pin(16, Pin.OUT)
 adc = ADC(2)
-
-# Resistor values for voltage divider
-r1 = 1000  # 100kΩ
-r2 = 2200  # 100kΩ
-
-
-mqtt_host = "io.adafruit.com"
-mqtt_username = "armsto88"  # Your Adafruit IO username
-mqtt_password = "aio_LhlT25vCVvEKVoLPRAFAa7GsjcSg"  # Adafruit IO Key
-mqtt_publish_topic = "armsto88/feeds/pico-data-solar"  # The MQTT topic for your Adafruit IO Feed
-mqtt_client_id = "Strongsounds87279299"
+r1 = 1000  
+r2 = 2200
 
 
 # WiFi connection function with delay
 def connect_to_wifi():
-    import network  # Import locally to limit memory usage
-    import time
-    import gc  # Garbage collection
+    import network   
 
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
@@ -55,22 +38,22 @@ def connect_to_wifi():
 
     retry_count = 0
     max_retries = 10
-    delay_seconds = 2  # Delay duration between retries
+    delay_seconds = 2  
 
     while not wlan.isconnected() and retry_count < max_retries:
         print(f"Connecting to WiFi... Attempt {retry_count + 1}/{max_retries}")
-        time.sleep(delay_seconds)  # Wait before retrying
+        time.sleep(delay_seconds)  
         retry_count += 1
 
     if wlan.isconnected():
         print("Connected to WiFi:", wlan.ifconfig())
-        del network  # Remove the module to free memory
-        gc.collect()  # Trigger garbage collection
+        del network  
+        gc.collect()  
         return wlan
     else:
         print("Failed to connect to WiFi after retries.")
-        del network  # Remove the module to free memory
-        gc.collect()  # Trigger garbage collection
+        del network  
+        gc.collect()  
         return None
 
     
@@ -192,10 +175,7 @@ def log_temperature_to_sd(data_to_log, sd_directory):
     print(f"Failed to write to {sd_directory} after {retries} attempts.")
 
 
-
-
-
-            
+         
 
 # Send data to webhook
 def send_data_to_webhook(data_to_send):
@@ -207,12 +187,6 @@ def send_data_to_webhook(data_to_send):
         print("Error sending data:", e)
         
 
-# Initialize our MQTTClient and connect to the MQTT server
-mqtt_client = MQTTClient(
-        client_id=mqtt_client_id,
-        server=mqtt_host,
-        user=mqtt_username,
-        password=mqtt_password)
 
 def read_battery_voltage():
     raw_value = adc.read_u16()  # Read ADC (0-65535)
@@ -220,7 +194,6 @@ def read_battery_voltage():
     vin = voltage_out * ((r1 + r2) / r2)  # Calculate input voltage
     return vin
 
-       
 
     
     # Add the disconnect_wifi function
@@ -241,9 +214,6 @@ def main():
     connect_to_wifi()
     time.sleep(2)
 
-    # Connect to MQTT
-    mqtt_client.connect()
-    time.sleep(2)
     
     initialize_sd_card()
     time.sleep(1)
@@ -276,7 +246,6 @@ def main():
         print("MOSFET OFF")  # Indicate the MOSFET is off
 
 
-        
         
         try:
             _time = rtc.get_time()  # Call the function to get the time tuple
@@ -334,14 +303,6 @@ def main():
         # Send the data to a webhook
         send_data_to_webhook(data)
 
-#         # Publish data to MQTT
-#         try:
-#             for key, value in data.items():
-#                 feed = f"{mqtt_username}/feeds/{key}"  # Create feed key for each dictionary entry
-#                 mqtt_client.publish(feed, str(value))  # Publish the value as a string
-#                 print(f"Published {key}: {value} to {feed}")
-#         except Exception as e:
-#                 print(f"Error publishing data: {e}")
 
         # Disconnect WiFi after publish
         disconnect_wifi()
