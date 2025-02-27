@@ -20,7 +20,7 @@ This Pico-based Data Logger is a low-power, autonomous environmental monitoring 
 
 3. Data Storage
 
-    2 × SD Card Breakout Boards – Connected via SPI for redundant data logging.
+    2 × SD Card Breakout Boards – Connected via SPI for data storage.
 
 4. Power Management
 
@@ -128,9 +128,17 @@ The image below highlights both resistors that should be removed. Applying heat 
 
 ### **3. Making the auto-power off and voltage indicator circuits**
 
+The auto power-off and voltage measurement circuit was built on a 6 × 4 cm section of double-sided perfboard. Before transitioning to the more permanent perfboard, the circuit was first assembled and tested on a breadboard.
+
+All soldering was done on the underside at a temperature of 350 °C. The resistors used in the voltage divider were 1 kΩ and 2.2 kΩ. External pull-ups for the RTC were 4.7 kΩ, while the pull-ups for the transistor in the voltage divider were 100 kΩ, and for the auto power-off, 220 kΩ.
+
+The voltage divider was powered directly from the battery, with leads soldered to the positive and negative terminals. This approach was necessary because the main output of the Waveshare power unit is boosted to 5V.
+
 
 
 ![Alt text](auto_off_voltage_divider_bb.jpg)
+
+
 
 
 
