@@ -143,6 +143,16 @@ Below are some images to assist in its reconstruction. I plan to make this into 
 ![Description 3](IMG_6277.jpg)
 
 
+### **4. Preparing the water-proof housing**
+
+
+### **5. Preparing the Sensors.**
+
+### **6. Connecting the hardware.**
+
+### **7. Bringing it all together.**
+
+
 
 
 
