@@ -138,6 +138,10 @@ The voltage divider was powered directly from the battery, with leads soldered t
 
 ![Alt text](auto_off_voltage_divider_bb.jpg)
 
+![Description 1](IMG_6275.jpg)
+![Description 2](IMG_6276.jpg)
+![Description 3](IMG_6277.jpg)
+
 
 
 
