@@ -134,7 +134,7 @@ All soldering was done on the underside at a temperature of 350 °C. The resisto
 
 The voltage divider was powered directly from the battery, with leads soldered to the positive and negative terminals. This approach was necessary because the main output of the Waveshare power unit is boosted to 5V.
 
-
+Below are some images to assist in its reconstruction. I plan to make this into a PCB hat for the pico in the future.
 
 ![Alt text](auto_off_voltage_divider_bb.jpg)
 
