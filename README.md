@@ -27,6 +27,12 @@ Planned improvements for future versions include enhanced wireless communication
 
 [Build Overview](Build_overview)
 
+# Testing
+
+[Battery Test #1 "Voltage profile" (Base line)](Battery_test)
+
+[Battery Test #2 "Volatge Profile" (Solar input)](Battery_test_solar)
+
 
 ## Contributions
 
