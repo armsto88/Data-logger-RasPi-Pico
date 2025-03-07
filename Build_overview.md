@@ -144,6 +144,15 @@ Below are some images to assist in its reconstruction. I plan to make this into 
 
 ### **4. Preparing the water-proof housing**
 
+I decided to use **RJ45 couplers** ([link](https://www.amazon.de/dp/B0CRZ3MTG8?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)) to connect the sensors through the waterproof case. This choice was mainly driven by cost. While there are likely more robust and better-form-factor waterproof through couplers available, these were much more affordable at the time.
+
+I drilled **23mm holes** using a **Forstner drill bit** ([link](https://www.amazon.de/-/en/dp/B0BQ7CHXVP?ref=ppx_yo2ov_dt_b_fed_asin_title)) through the bottom of the case. Care must be taken when measuring the holes, as there is little tolerance. I ensured that the long side of the coupler was oriented on the outside of the box to provide more space for cabling later on.
+
+A waterproof gland also needs to be added to the right side of the case for the solar input. I installed this after mounting the hardware and positioning it inside the case to ensure proper placement. I used a [PG7 Waterproof Gland](https://www.amazon.de/-/en/PUWOWYE-PG13-5-Connection-Waterproof-Feed-Through/dp/B0D838PL5S/ref=sr_1_5?crid=3VYAEA9W50VLR&dib=eyJ2IjoiMSJ9.Q9CmCOnGXfRoucIfuKd7BdRH0-l3h82cQp6yr2v_Vg9pRBa01lQ0Fz92AT5TaWTsEU0SzQaOfyxX7jVMbH3LLwQEF5aS7L19sCNyssScw_GWa2gCnlKFqg3L8Pp5gVR1VP89EGvzKkPAELC581C-Ai2ol1jDAtyImadjeD5mljd2Flqo94XmRd5nsJ0CdMYMnLurS91rKUhFBPPV8BsYveNp-JJagVgK5SDnhs8dxwmdUFIGr-s83yt4Q3C5t1vAvaFS7bLOCZiyjt6ZNqI0ZDUUQvZMy9nZbHwMDojIzKwLJYu5AE41qlHVQQF4nqyugdC7wWea3owpc50YH6Ds89u9Lj5AAUjzP7BJqfbJx4I.5qhio0pf8YrQWuRzZwF3qk-BzBsrOmGI9dKGIbOaoys&dib_tag=se&keywords=water+proof+gland+pg7&qid=1741373254&s=industrial&sprefix=water+proof+gland+pg7%2Cindustrial%2C141&sr=1-5) for this purpose.
+
+
+
+
 
 ### **5. Preparing the Sensors.**
 
