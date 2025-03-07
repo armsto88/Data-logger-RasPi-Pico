@@ -121,9 +121,7 @@ To achieve this, the charging resistor can be removed.
 The image below highlights both resistors that should be removed. Applying heat and gentle pressure will quickly dislodge them. However, be careful not to apply excessive force, as this could damage the DS3231 or cause injury.
 
 
-![Alt_text](ds3231_02.jpg)
-
-
+[DS3231 Mods](Build_images/ds3231_RTC.jpg)
 
 
 ### **3. Making the auto-power off and voltage indicator circuits**
@@ -136,11 +134,11 @@ The voltage divider was powered directly from the battery, with leads soldered t
 
 Below are some images to assist in its reconstruction. I plan to make this into a PCB hat for the pico in the future.
 
-![Alt text](auto_off_voltage_divider_bb.jpg)
+[Auto-off circuit](Build_images/auto_off_voltage_divider_bb.jpg)
 
-![Description 1](IMG_6275.jpg)
-![Description 2](IMG_6276.jpg)
-![Description 3](IMG_6277.jpg)
+[Auto-off circuit](Build_images/auto_off_1.jpg)
+[Auto-off circuit](Build_images/auto_off_2.jpg)
+[Auto-off circuit](Build_images/auto_off_3.jpg)
 
 
 ### **4. Preparing the water-proof housing**
