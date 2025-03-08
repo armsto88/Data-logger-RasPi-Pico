@@ -171,7 +171,7 @@ The humidity/temperature sensors, which use the I2C protocol, needed to pass thr
 The output of the multiplexer (another STEMMA QT) was then routed into the provided input on the proto underplate, reducing cable clutter and avoiding the need for an additional four wires running directly into the Pico's GPIOs.  
 
 
-
+![Connectors](Build_images/RJ45_connectors.jpg)
 
 
 
