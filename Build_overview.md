@@ -154,7 +154,28 @@ A waterproof gland also needs to be added to the right side of the case for the 
 
 
 
-### **5. Preparing the Sensors.**
+### **5. Preparing the Sensors**  
+
+Using RJ45 couplers required modifying the ends of each sensor to allow them to connect properly. To achieve this, I purchased some short [Cat7 patch cables](https://www.amazon.de/dp/B0797SCT55?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1). I cut a 10 cm length, removed the shielding to expose the four wire pairs, then stripped and twisted the pairs together.  
+
+For the temperature sensors, which have three wires, one pair could be discarded. The connector and the sensor wire were then soldered together and insulated. The humidity/temperature sensors, however, use a digital protocol that requires four wires, meaning all pairs from the Cat7 cable are needed.  
+
+**Be sure to note where each wire is connected to the RJ45 plug, as you'll need to replicate this inside the box and route each wire correctly to the Pico.**
+
+I chose to merge the three wires from each temperature sensor inside the case before routing them to the Pico. Since they use the digital "1-wire" protocol, this connection needed to be made somewhere, and doing it inside the case kept the wiring clean.  
+
+This involved soldering all power wires together, all ground wires together, and all signal wires together using three pairs from another set of RJ45 connectors. Three wires (Power, Ground, and Signal) then emerged from the connectors and were routed to the Pico.  
+
+The humidity/temperature sensors, which use the I2C protocol, needed to pass through a multiplexer since they all shared the same digital address. The multiplexer I used had four STEMMA QT connectors as inputs, so I soldered these to the ends of each RJ45 connector inside the box.  
+
+The output of the multiplexer (another STEMMA QT) was then routed into the provided input on the proto underplate, reducing cable clutter and avoiding the need for an additional four wires running directly into the Pico's GPIOs.  
+
+
+
+
+
+
+
 
 ### **6. Connecting the hardware.**
 
