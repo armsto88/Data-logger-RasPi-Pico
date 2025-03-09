@@ -183,7 +183,7 @@ My plan was to design a plate in which sat atop the waveshare power manager, on 
 
 Files to print both mountinmg plates can be found here
 
-Large mounting plate
+Base plate (3D_prints/base_plate-Body.stl)
 Small mounting plate
 
 The prints are not yet perfect, some minor re drilling and manipulating was required to make the holes allgin.
