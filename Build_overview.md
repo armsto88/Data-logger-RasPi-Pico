@@ -179,6 +179,15 @@ The output of the multiplexer (another STEMMA QT) was then routed into the provi
 
 ### **6. Connecting the hardware.**
 
+My plan was to design a plate in which sat atop the waveshare power manager, on to which i couzld mount both SD card readers and the protounderplate with pico on top. The auto power off circuit mounts directly on to the backing plate that is the width of the case. 
+
+Files to print both mountinmg plates can be found here
+
+Large mounting plate
+Small mounting plate
+
+The prints are not yet perfect, some minor re drilling and manipulating was required to make the holes allgin.
+
 ### **7. Bringing it all together.**
 
 
