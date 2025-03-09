@@ -188,7 +188,9 @@ Files for printing both mounting plates can be found in the repository:
 
 The prints are not yet perfect—some minor re-drilling and adjustments were required to align the holes properly. 
 
-
+![Hardware Image 1](Build_images/hardware_1.jpg)  
+![Hardware Image 2](Build_images/hardware_2.jpg)  
+![Hardware Image 3](Build_images/hardware_3.jpg)  
 
 
 ### **7. Bringing it all together.**
