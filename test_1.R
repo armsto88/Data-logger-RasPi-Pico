@@ -51,7 +51,7 @@ ggplot(df, aes(x = cumulative_hours)) +
 temp_ds<-df%>%
   select(c(cumulative_hours,temperature_ds1,temperature_ds2,temperature_ds3))
 
-temp_ds %>%
+under<-temp_ds %>%
   ggplot(aes(x = cumulative_hours)) +
   geom_line(aes(y = temperature_ds1, color = "Temperature DS1"), size = 1.2) +
   geom_line(aes(y = temperature_ds2, color = "Temperature DS2"), size = 1.2) +
@@ -70,9 +70,45 @@ temp_ds %>%
   theme(
     legend.position = "top",
     legend.title = element_blank(),
-    axis.title = element_text(vjust = 1),
+    axis.title.x = element_text(vjust = -2,face="bold"),
+    axis.title.y = element_text(vjust = 3,face="bold"),
     plot.margin = margin(20, 20, 20, 20)
   )
 
+
+# Select relevant columns from the df data
+temperature_data <- df %>%
+  select(c(cumulative_hours, shtc3_temp_1, shtc3_temp_2, shtc3_temp_3))
+
+# Plot temperature data
+over<-ggplot(temperature_data, aes(x = cumulative_hours)) +
+  geom_line(aes(y = shtc3_temp_1, color = "SHT30_temp_1"), size = 1.2) +
+  geom_line(aes(y = shtc3_temp_2, color = "SHT30_temp_2"), size = 1.2) +
+  geom_line(aes(y = shtc3_temp_3, color = "SHT30_temp_3"), size = 1.2) +
+  scale_color_manual(values = c("SHT30_temp_1" = "#1B9E77", 
+                                "SHT30_temp_2" = "#D95F02", 
+                                "SHT30_temp_3" = "#7570B3")) +
+  scale_x_continuous(
+    limits = c(0, max(temperature_data$cumulative_hours, na.rm = TRUE)),  # Ignore NA values in max calculation
+    breaks = seq(0, max(temperature_data$cumulative_hours, na.rm = TRUE), by = 5)  # Set breaks at 5-hour intervals
+  ) +
+  labs(
+    x = "Cumulative Hours",
+    y = "Temperature (°C)",
+    color = "Sensors"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    legend.title = element_blank(),
+    axis.title.x = element_text(vjust = -2, face = "bold"),
+    axis.title.y = element_text(vjust = 3, face = "bold"),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+
+library(gridExtra)
+
+
+grid.arrange(under, over, ncol = 2)
 
 
