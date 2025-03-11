@@ -53,15 +53,22 @@ The test was expected to provide a clear understanding of the **total operationa
    - **Test Conditions**: Two testing environments were used:
      - **Indoor**: Stable temperature (~15°C)
      - **Outdoor**: Normal operating conditions in Germany (March 8th, 2025)
-   - **Battery Monitoring**: Battery voltage and percentage were monitored periodically, with periodic validation using a multimeter.
+   - **Battery Monitoring**: Battery voltage read from the voltage divider was monitored , with periodic validation using a multimeter.
 
 ### 2. **Battery Runtime**
 
-   - **Indoor Test Duration**:
-     - **Start Voltage**: [Insert start voltage]
-     - **End Voltage**: [Insert end voltage]
-     - **Total Runtime**: [Insert hours/days the battery lasted]
-     - **Key Observations**: [Any important notes on performance, e.g., temperature effects or battery consumption trends]
+#### **Indoor Test Duration**
+- **Start Voltage**: 3.92 V (actual: 3.96 V)  
+- **End Voltage**: 3.00 V (actual: 3.00 V)  
+- **Total Runtime**: 71.2 hours  
+
+#### **Key Observations**
+- The internal voltage reading is approximately **0.02 V lower** than the multimeter reading at its maximum value.  
+- Significant noise is present, likely due to the **ADC on the Raspberry Pi Pico**, causing fluctuations of around **±0.2 V**.  
+- While the general trend of the internal voltage reading is accurate, it **is not reliable** for low-power shutoff decisions.  
+- The **Waveshare power manager** automatically cuts power at **3.0 V**.  
+
+      
 
    - **Outdoor Test Duration**:
      - **Start Voltage**: [Insert start voltage]
