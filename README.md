@@ -25,7 +25,7 @@ Planned improvements for future versions include enhanced wireless communication
 
 # Build Overview
 
-[Build Overview](Build_overview)
+[Build Overview](Build_overview.md)
 
 # Testing
 
