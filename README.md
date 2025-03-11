@@ -1,5 +1,5 @@
 
-# Data Logger (Raspberry Pi - Pico)
+# Data Logger (Prototype 1)
 
 # Overview
 
