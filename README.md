@@ -29,6 +29,30 @@ Planned improvements for future versions include enhanced wireless communication
 
 # Costing
 
+| Component                                | Quantity | Price per Unit (€) | Total Price (€) |
+|------------------------------------------|----------|--------------------|-----------------|
+| **Raspberry Pi Pico WH**                 | 1        | 7.20               | 7.20            |
+| **Waveshare Solar Management Module**    | 1        | 15.95              | 15.95           |
+| **14500 LiPo Battery**                   | 1        | 6.00               | 6.00            |
+| **SD Card Breakout Board**               | 2        | 3.00               | 6.00            |
+| **DS18B20 Temperature Sensors**          | 3        | 2.95               | 8.85            |
+| **SHT30 Sensors**                        | 3        | 6.00               | 18.00           |
+| **IRF4905 P-Channel MOSFETs**            | 2        | 1.50               | 3.00            |
+| **IRFZ44N N-Channel MOSFET**             | 1        | 1.50               | 1.50            |
+| **Resistors**                            |          |                    |                 |
+| - 4.7KΩ                                  | 2        | 0.05               | 0.10            |
+| - 220KΩ                                  | 1        | 0.05               | 0.05            |
+| - 1KΩ                                    | 1        | 0.05               | 0.05            |
+| - 2.2KΩ                                  | 1        | 0.05               | 0.05            |
+| - 100KΩ                                  | 1        | 0.05               | 0.05            |
+| **PCA9546A I2C Multiplexer**             | 1        | 11.00              | 11.00           |
+| **Adafruit Proto Underplate**            | 1        | 6.00               | 6.00            |
+| **Waterproof Housing**                   | 1        | 15.00              | 15.00           |
+| **RJ45 Couplers**                        | 6        | 4.33               | 26.00           |
+| **RJ45 Patch Cables**                    | 6        | 1.50               | 9.00            |
+| **USB Couplers**                         | 1        | 6.00               | 6.00            |
+| **Total Estimated Cost**                 |          |                    | **141.90**      |
+
 
 # Testing
 
