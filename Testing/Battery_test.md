@@ -68,7 +68,7 @@ The test was expected to provide a clear understanding of the **total operationa
 - While the general trend of the internal voltage reading is accurate, it **is not reliable** for low-power shutoff decisions.  
 - The **Waveshare power manager** automatically cuts power at **3.0 V**.
 
-#### **Voltage Over Time**
+#### **Voltage Over Time - Indoor**
 ![Battery Voltage Over Time](/Testing/test_1_(Voltage_Time).svg)
 
       
