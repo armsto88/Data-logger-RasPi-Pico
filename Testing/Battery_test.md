@@ -66,7 +66,10 @@ The test was expected to provide a clear understanding of the **total operationa
 - The internal voltage reading is approximately **0.02 V lower** than the multimeter reading at its maximum value.  
 - Significant noise is present, likely due to the **ADC on the Raspberry Pi Pico**, causing fluctuations of around **±0.2 V**.  
 - While the general trend of the internal voltage reading is accurate, it **is not reliable** for low-power shutoff decisions.  
-- The **Waveshare power manager** automatically cuts power at **3.0 V**.  
+- The **Waveshare power manager** automatically cuts power at **3.0 V**.
+
+#### **Voltage Over Time**
+![Battery Voltage Over Time](/Testing/test_1_(Voltage_Time).svg)
 
       
 
