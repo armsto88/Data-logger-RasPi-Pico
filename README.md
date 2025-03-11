@@ -29,9 +29,9 @@ Planned improvements for future versions include enhanced wireless communication
 
 # Testing
 
-[Battery Test #1 "Voltage profile" (Base line)](Battery_test.md)
+[Battery Test #1 "Voltage profile" (Base line)](Testing/Battery_test.md)
 
-[Battery Test #2 "Volatge Profile" (Solar input)](Battery_test_solar.md)
+[Battery Test #2 "Volatge Profile" (Solar input)](Testing/Battery_test_solar.md)
 
 
 ## Contributions
