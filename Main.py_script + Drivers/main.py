@@ -15,46 +15,52 @@ import SHT30
 WEBHOOK_URL = "https://hook.eu1.make.com/cxyhxctngdmc1ohme35cxln7fi9s7rjm"
 TCA9548A_ADDRESS = 0x71
 AT_COMMAND_DELAY = 5
-i2c_1 = SoftI2C(scl=Pin(18), sda=Pin(19))
-rtc = DS3231(i2c_1) 
-i2c = I2C(0, sda=Pin(4), scl=Pin(5))
-sht = SHT30.SHT30(i2c)
-led = machine.Pin("LED", machine.Pin.OUT)
+led = Pin("LED", Pin.OUT)
 mosfet_gate = Pin(16, Pin.OUT)
 adc = ADC(2)
-r1 = 1000  
-r2 = 2200
+r1, r2 = 1000, 2200
 
+try:
+    i2c_1 = SoftI2C(scl=Pin(18), sda=Pin(19))
+    rtc = DS3231(i2c_1)
+    i2c = I2C(0, sda=Pin(4), scl=Pin(5))
+    sht = SHT30.SHT30(i2c)
+    led = Pin("LED", Pin.OUT)
+    mosfet_gate = Pin(16, Pin.OUT)
+    adc = ADC(2)
+    r1, r2 = 1000, 2200
+except Exception as e:
+    print(f"Error initializing hardware components: {e}")
 
-# WiFi connection function with delay
+#Connect to WIFI
+    
 def connect_to_wifi():
-    import network   
-
-    wlan = network.WLAN(network.STA_IF)
-    wlan.active(True)
-    ssid = 'gigacube-0F3C'
-    password = '5dTQ7HA8242495T8'
-    wlan.connect(ssid, password)
-
-    retry_count = 0
-    max_retries = 10
-    delay_seconds = 2  
-
-    while not wlan.isconnected() and retry_count < max_retries:
-        print(f"Connecting to WiFi... Attempt {retry_count + 1}/{max_retries}")
-        time.sleep(delay_seconds)  
-        retry_count += 1
-
-    if wlan.isconnected():
-        print("Connected to WiFi:", wlan.ifconfig())
-        del network  
-        gc.collect()  
+    try:
+        import network
+        wlan = network.WLAN(network.STA_IF)
+        wlan.active(True)
+        ssid, password = 'gigacube-0F3C', '5dTQ7HA8242495T8'
+        
+        if not wlan.isconnected():
+            wlan.connect(ssid, password)
+            start_time, timeout = time.time(), 20
+            while not wlan.isconnected() and time.time() - start_time < timeout:
+                print(f"Attempting WiFi... {int(time.time() - start_time)}s elapsed")
+                time.sleep(2)
+        
+        if wlan.isconnected():
+            print("Connected to WiFi:", wlan.ifconfig())
+        else:
+            print("Failed to connect to WiFi. Offline mode enabled.")
+        
+        del network
+        gc.collect()
         return wlan
-    else:
-        print("Failed to connect to WiFi after retries.")
-        del network  
-        gc.collect()  
+    except Exception as e:
+        print(f"WiFi Connection Error: {e}")
         return None
+
+
 
     
 def initialize_sd_card():
@@ -118,32 +124,53 @@ def select_channel(i2c, channel):
     else:
         raise ValueError("Invalid channel. Must be between 0 and 7.")
 
-# SHT30 Function
+#Read SHT30
+    
 def read_temperature_and_humidity(sensor):
     try:
         temperature, humidity = sensor.measure()
+        if temperature is None or humidity is None:
+            raise ValueError("Invalid sensor readings")
         return temperature, humidity
-    except SHT30Error as e:
-        print(f"SHT30 sensor error: {e.get_message()}")
-        return None, None
     except Exception as e:
-        print(f"Unexpected error reading SHT30 sensor: {e}")
+        print(f"Error reading SHT30 sensor: {e}")
         return None, None
 
+
+
+#Log to SD cards
 
 def log_temperature_to_sd(data_to_log, sd_directory):
     log_path = f"{sd_directory}/log.csv"
     retries = 3
 
+    try:
+        files_in_directory = uos.listdir(sd_directory)
+        print(f"Files in directory: {files_in_directory}")
+    except OSError as e:
+        print(f"Error reading directory {sd_directory}: {e}")
+        return
+
+    # Check if log.csv exists in the directory
+    if 'log.csv' not in files_in_directory:
+        print(f"{log_path} not found in directory, creating new file.")
+        try:
+            with open(log_path, 'w') as file:
+                # Write the header only if the file is being created
+                file.write("Datetime,Temp1,Temp2,Temp3,Humidity1,Humidity2,Humidity3,Voltage\n")
+        except OSError as e:
+            print(f"Error creating file: {e}")
+            return
+
+    # Now attempt to append data to the file
     for attempt in range(retries):
         try:
-            if log_path not in uos.listdir(sd_directory):
-                with open(log_path, 'w') as file:
-                    file.write("Datetime,Temp1,Temp2,Temp3,Humidity1,Humidity2,Humidity3,Voltage\n")
+            print(f"Attempting to append to {log_path} (Attempt {attempt + 1}/{retries})")
 
             with open(log_path, 'a') as file:
                 print("Logging data:", data_to_log)
 
+                # Prepare the log entry data
                 log_values = [
                     data_to_log.get('datetime', 'N/A'),
                     f"{data_to_log.get('temperature_ds1', 0):.2f}",
@@ -155,17 +182,23 @@ def log_temperature_to_sd(data_to_log, sd_directory):
                     f"{data_to_log.get('voltage', 0):.2f}"
                 ]
 
+                # Format the log entry and append it to the file
                 log_entry = ",".join(log_values) + "\n"
                 file.write(log_entry)
-                file.flush()
+                file.flush()  # Ensure the data is written immediately
 
-            print(f"Data logged successfully to {sd_directory}.")
-            return  
+            print(f"Data logged successfully to {log_path}.")
+            return  # Exit after successful log entry
 
         except OSError as e:
-            print(f"Error writing to {sd_directory}: {e} (Attempt {attempt + 1}/{retries})")
+            print(f"Error writing to {log_path}: {e} (Attempt {attempt + 1}/{retries})")
 
-    print(f"Failed to write to {sd_directory} after {retries} attempts.")
+    # If retries are exhausted, notify the user
+    print(f"Failed to write to {log_path} after {retries} attempts.")
+
+
+
+
 
 
 def send_data_to_webhook(data_to_send):
@@ -178,10 +211,14 @@ def send_data_to_webhook(data_to_send):
 
 
 def read_battery_voltage():
-    raw_value = adc.read_u16()  
-    voltage_out = (raw_value / 65535.0) * 3.3  
-    vin = voltage_out * ((r1 + r2) / r2)  
-    return vin
+    try:
+        raw_value = adc.read_u16()
+        voltage_out = (raw_value / 65535.0) * 3.3
+        vin = voltage_out * ((r1 + r2) / r2)
+        return vin
+    except Exception as e:
+        print(f"Error reading battery voltage: {e}")
+        return None
 
 
 def disconnect_wifi():
@@ -197,7 +234,7 @@ def main():
     gc.collect()
 
     # Connect to WiFi
-    connect_to_wifi()
+    wlan = connect_to_wifi() 
     time.sleep(2)
 
     # Initialize SD cards
@@ -282,8 +319,13 @@ def main():
         log_temperature_to_sd(data, "/sd2")
         time.sleep(1)
 
-        # Send the data to a webhook
-        send_data_to_webhook(data)
+        
+        # If WiFi is connected, send data to the webhook
+        
+        if wlan and wlan.isconnected():
+            send_data_to_webhook(data)
+        else:
+            print("No WiFi connection, skipping data upload.")
 
         # Disconnect WiFi after publish
         disconnect_wifi()
