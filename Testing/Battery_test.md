@@ -38,15 +38,8 @@ The goal of this test was to determine how long the data logger could operate on
    - **Evaluated Performance**: Compared the battery life across both test conditions and noted any temperature variances.
    - **Identified Efficiency Improvements**: Analyzed components that may have consumed more power than anticipated (e.g., sensors, Wi-Fi module, or data storage).
 
-### Expected Outcome:
-The test was expected to provide a clear understanding of the **total operational time** before the battery was depleted. Key findings included:
-
-- **Total battery runtime**: The number of hours or days the system could operate before requiring a recharge.
-- **Performance vs expectations**: Whether the system lasted longer or shorter than expected based on the battery and component specifications.
-- **Battery consumption trends**: Any noticeable patterns in battery usage, such as rapid depletion at certain intervals.
 
 ### Results
-
 
 ### 1. **Overview of Test Setup**
    - **Data Logger Configuration**: The data logger was set to record data at 30-minute intervals, using 3 x DS18B20 temperature sensors and 3 x SHT30 humidity/temperature sensors. Data was transmitted to the cloud via Wi-Fi.
