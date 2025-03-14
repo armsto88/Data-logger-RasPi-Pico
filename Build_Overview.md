@@ -129,8 +129,6 @@ The voltage divider was powered directly from the battery, with leads soldered t
 
 Below are some images to assist in its reconstruction. I plan to make this into a PCB hat for the pico in the future.
 
-![Auto-off circuit](Build_images/auto_off_voltage_divider_bb.jpg)
-
 ![Auto-off circuit](Build_images/auto_off_1.jpg)
 ![Auto-off circuit](Build_images/auto_off_2.jpg)
 ![Auto-off circuit](Build_images/auto_off_3.jpg)
@@ -188,6 +186,10 @@ The prints are not yet perfect—some minor re-drilling and adjustments were req
 
 
 ### **7. Bringing it all together.**
+
+
+![Breadboard View](Build_images/data_logger_P1_1.png)  
+![Schematic View](Build_images/data_logger_P1_schem.png)  
 
 
 
