@@ -191,6 +191,11 @@ The prints are not yet perfect—some minor re-drilling and adjustments were req
 ![Breadboard View](Build_images/data_logger_P1_1.png)  
 ![Schematic View](Build_images/data_logger_P1_schem.png)  
 
+----
+
+![Complete 1](Build_images/complete_1)
+![Complete 2](Build_images/complete_2)
+
 
 
 
