@@ -71,6 +71,8 @@ The goal of this test was to determine how long the data logger could operate on
      - The  colder average temperatrure reduced run time by approx. 10 hours.
        
 
+![Voltage vs Time Temperature Plot](Plots/Voltage_time_Temp.svg)
+
 
 
 ### 6. **Recharging Process**
