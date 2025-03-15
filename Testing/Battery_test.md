@@ -60,31 +60,18 @@ The goal of this test was to determine how long the data logger could operate on
 - Significant noise is present, likely due to the **ADC on the Raspberry Pi Pico**, causing fluctuations of around **±0.2 V**.  
 - While the general trend of the internal voltage reading is accurate, it **is not reliable** for low-power shutoff decisions.  
 - The **Waveshare power manager** automatically cuts power at **3.0 V**.
-
-#### **Voltage Over Time - Indoor**
-![Battery Voltage Over Time](/Testing/test_1_(Voltage_Time).svg)
-
-      
-
+   
+---
    - **Outdoor Test Duration**:
-     - **Start Voltage**: [Insert start voltage]
-     - **End Voltage**: [Insert end voltage]
-     - **Total Runtime**: [Insert hours/days the battery lasted]
-     - **Key Observations**: [Any relevant observations based on environmental factors like sunlight or weather]
+     - **Start Voltage**: 4.0 V 
+     - **End Voltage**: 3.0V
+     - **Total Runtime**: 63.2 H
+       
+     - **Key Observations**
+     - The  colder average temperatrure reduced run time by approx. 10 hours.
+       
 
-### 3. **Battery Consumption Trends**
-   - **Rate of Battery Depletion**: [Discuss how quickly the battery depleted over time. Did it remain constant, or were there periods of rapid depletion?]
-   - **Power-Hungry Components**: [Identify which sensors or components appeared to draw more power than expected. E.g., were the Wi-Fi or sensors the primary contributors to power consumption?]
-   - **Voltage Drops**: [Describe any significant drops in voltage or periods of instability, if any.]
 
-### 4. **Comparison of Indoor vs. Outdoor Performance**
-   - **Indoor vs. Outdoor Performance**: [Provide a comparative analysis of battery life under indoor and outdoor conditions. Discuss how environmental factors (e.g., temperature, sunlight) may have impacted the test.]
-   - **Temperature Influence**: [Discuss the impact of temperature on battery life. Was there any significant difference between the two conditions?]
-
-### 5. **Post-Test Analysis**
-   - **Battery Life vs. Expectations**: [Was the battery life as expected? Compare the actual battery life to the anticipated performance based on the system specifications.]
-   - **System Efficiency**: [Evaluate whether any specific components (sensors, Wi-Fi, etc.) could be optimized for better power consumption.]
-   - **Recommendations for Improvement**: [Suggest any improvements or modifications to increase battery life. E.g., reducing the sampling rate, using lower-power sensors, etc.]
 
 ### 6. **Recharging Process**
    - **Recharging Time**: [How long did it take to recharge the system to 100%?]
