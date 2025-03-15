@@ -111,4 +111,36 @@ library(gridExtra)
 
 grid.arrange(under, over, ncol = 2)
 
+# Correct data labeling and use proper variables for humidity
+humidity_data <- df %>%
+  select(c(cumulative_hours, shtc3_hum_1, shtc3_hum_2, shtc3_hum_3))
+
+hum <- ggplot(humidity_data, aes(x = cumulative_hours)) +
+  geom_line(aes(y = shtc3_hum_1, color = "SHT30_Humidity_1"), size = 1.2) +
+  geom_line(aes(y = shtc3_hum_2, color = "SHT30_Humidity_2"), size = 1.2) +
+  geom_line(aes(y = shtc3_hum_3, color = "SHT30_Humidity_3"), size = 1.2) +
+  scale_color_manual(values = c("SHT30_Humidity_1" = "#1B9E77", 
+                                "SHT30_Humidity_2" = "#D95F02", 
+                                "SHT30_Humidity_3" = "#7570B3")) +
+  scale_x_continuous(
+    limits = c(0, max(humidity_data$cumulative_hours, na.rm = TRUE)),  # Ignore NA values in max calculation
+    breaks = seq(0, max(humidity_data$cumulative_hours, na.rm = TRUE), by = 5)  # Set breaks at 5-hour intervals
+  ) +
+  labs(
+    x = "Cumulative Hours",
+    y = "Humidity (%)",
+    color = "Sensors"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    legend.title = element_blank(),
+    axis.title.x = element_text(vjust = -2, face = "bold"),
+    axis.title.y = element_text(vjust = 3, face = "bold"),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+
+hum
+
+
 
