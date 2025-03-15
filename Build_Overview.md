@@ -193,8 +193,8 @@ The prints are not yet perfect—some minor re-drilling and adjustments were req
 
 ----
 
-![Complete 1](Build_images/complete_1)
-![Complete 2](Build_images/complete_2)
+![Complete 1](Build_images/complete_1.jpg)
+![Complete 2](Build_images/complete_2.jpg)
 
 
 
