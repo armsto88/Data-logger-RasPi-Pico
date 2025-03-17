@@ -76,10 +76,19 @@ The goal of this test was to determine how long the data logger could operate on
 
 
 ### 3. **Recharging Process**
-   -**Starting volatge**: 3.0V
-**First day** - 100% cloud
-   - **Recharging Time**: [How long did it take to recharge the system to 100%?]
-   - **Comments**: [Was the recharging process efficient? Did it align with expected recharging times?]
+
+   **Starting volatge**: 3.0V
+   
+**Day 1** - 100% cloud
+**Recharging Time**: 0.4 V in 7.5 hours = 0.053 V / H
+
+**Day 2** - 10% cloud
+**Recharging Time**: 0.84 V in 9.5 hours = 0.088 V / H
+   
+   - **Comments**: Happy with recharge effectivness, particularly on day 1 with 100% cloud. 
+     
+![Recharge_time](Plots/recharge_time.svg)
+
 
 ### 7. **Conclusion**
    - **Summary of Findings**: [Summarize the overall battery performance and the key insights from the test.]
