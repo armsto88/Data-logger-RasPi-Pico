@@ -5,15 +5,25 @@ library(zoo)
 
 
 ###Test_1
-
+write.csv(df,"Pico_solar_abiotic - test_1.csv")
 df<-read.csv("raw_test_data/Pico_solar_abiotic - test_1.csv")
-df<-df%>%select(-c(X,X.1))
+df <- df %>%
+  slice(10:n())
+df <- df %>%
+  mutate(acc.V = replace(acc.V,1,4.02))
+
 
 str(df)
 
 df <- df %>%
   mutate(datetime = dmy_hms(datetime),
          cumulative_hours = as.numeric(difftime(datetime, first(datetime), units = "hours")))
+
+df <- df %>%
+  slice(2:n())
+
+df<- df%>%
+  rename(Batt_voltage = Voltage,`Acc..V`=acc.V)
 
 
 # Interpolate missing values
@@ -23,7 +33,7 @@ df <- df %>%
     `Acc..V` = na.approx(`Acc..V`, cumulative_hours, na.rm = FALSE)
   )
 
-ggplot(df, aes(x = cumulative_hours)) +
+Inside <-ggplot(df, aes(x = cumulative_hours)) +
   geom_line(aes(y = Batt_voltage, color = "Batt Voltage"), size = 1.2) +
   geom_line(aes(y = `Acc..V`, color = "Acc. Voltage"), size = 1.2) +
   scale_color_manual(values = c("Batt Voltage" = "#1B9E77", "Acc. Voltage" = "#D95F02")) +
@@ -31,6 +41,7 @@ ggplot(df, aes(x = cumulative_hours)) +
     limits = c(0, max(df$cumulative_hours,na.rm = T)),  # Adjust x-axis limits based on your data
     breaks = seq(0, max(df$cumulative_hours,na.rm = T), by = 5))+
   labs(
+    title = paste0("Average temp.", " = ", round(mean(df$temperature_ds1, na.rm = TRUE), digits = 3), "°C"),
     x = "Cumulative Hours",
     y = "Voltage (V)",
     color = "Legend"
@@ -44,7 +55,7 @@ ggplot(df, aes(x = cumulative_hours)) +
     plot.margin = margin(20, 20, 20, 20) # Adjust margins (top, right, bottom, left)
   )
 
-
+Inside
 #Sensor comparisons 
 
 #Temperature
@@ -142,5 +153,7 @@ hum <- ggplot(humidity_data, aes(x = cumulative_hours)) +
 
 hum
 
-
+out
+Inside
+grid.arrange(out, Inside, ncol = 2)
 
