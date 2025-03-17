@@ -75,9 +75,11 @@ The goal of this test was to determine how long the data logger could operate on
 
 
 
-### 6. **Recharging Process**
+### 3. **Recharging Process**
+   -**Starting volatge**: 3.0V
+**First day** - 100% cloud
    - **Recharging Time**: [How long did it take to recharge the system to 100%?]
-   - **Recharging Efficiency**: [Was the recharging process efficient? Did it align with expected recharging times?]
+   - **Comments**: [Was the recharging process efficient? Did it align with expected recharging times?]
 
 ### 7. **Conclusion**
    - **Summary of Findings**: [Summarize the overall battery performance and the key insights from the test.]
