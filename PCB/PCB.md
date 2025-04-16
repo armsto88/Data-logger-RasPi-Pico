@@ -17,7 +17,8 @@ The new PCB will integrate:
 - RTC-based power scheduling
 - Modular ports for external sensor connectivity
 
-This document will be updated as the schematic is finalised, the board is laid out, and testing begins. Fabrication files and assembly instructions will also be provided to support replication and contribution.
+![front PCB design](PCB_images/front.png)
+![back PCB design](PCB_images/back.png)
 
 ---
 
