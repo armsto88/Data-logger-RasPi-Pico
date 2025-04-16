@@ -1,5 +1,5 @@
 
-# Data Logger (Prototype 1)
+# Enviro Logger (Prototype 1)
 
 # Overview
 
@@ -59,7 +59,8 @@ Planned improvements for future versions include enhanced wireless communication
 [Battery Test #1 "Voltage profile" ](Testing/Test_1/Battery_test.md)
 
 
-
+----
+# Enviro Logger  (Prototype 2)
 
 ## Contributions
 
