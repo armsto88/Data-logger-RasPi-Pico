@@ -17,4 +17,3 @@ This document will be updated as the schematic is finalised, the board is laid o
 
 ---
 
-*Back to [Prototype 1 Overview](README.md)*
