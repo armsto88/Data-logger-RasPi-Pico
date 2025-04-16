@@ -62,6 +62,8 @@ Planned improvements for future versions include enhanced wireless communication
 ----
 # Enviro Logger  (Prototype 2)
 
+## PCB schematic and design 
+
 ## Contributions
 
 (Instructions on how others can contribute, report issues, or suggest improvements.)
