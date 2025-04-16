@@ -6,9 +6,11 @@ Prototype 1 utilised a modular hardware approach using multiple breakout boards 
 
 The aim of the PCB design is to consolidate these components into a single, compact, and robust board optimised for real-world deployment. This will improve reliability, simplify assembly, and reduce the chances of connection failure due to vibration, moisture, or prolonged use in outdoor environments.
 
+![Schematic of the PCB design](PCB/PCB_images/schematic.png)
+
 The new PCB will integrate:
-- A microcontroller (Raspberry Pi Pico )
-- Data storage via 2 x SD card interface
+- A microcontroller (Raspberry Pi Pico)
+- Data storage via 2 × SD card interface
 - 1-Wire and I2C sensor support
 - RTC-based power scheduling
 - Modular ports for external sensor connectivity
