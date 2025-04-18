@@ -91,12 +91,29 @@ The goal of this test was to determine how long the data logger could operate on
 
 
 ### 7. **Conclusion**
-   - **Summary of Findings**: [Summarize the overall battery performance and the key insights from the test.]
-   - **Future Testing**: [Outline any follow-up tests or experiments that could further explore or optimize battery life.]
+
+The battery life tests provided valuable insight into the data logger's real-world power performance and highlighted both strengths and areas for optimization.
+
+- **Runtime Observations**:
+  - Indoors, the logger maintained full functionality for over **71 hours**, indicating strong performance under thermally stable conditions.
+  - Outdoors, runtime dropped to **63.2 hours**, confirming that **colder ambient temperatures reduce battery efficiency** by approximately **10 hours**, consistent with expectations for Li-ion cells.
+
+- **Voltage Monitoring**:
+  - The internal ADC-based voltage readings from the Pico were generally useful for trend analysis but **not sufficiently accurate** for determining low-voltage cutoffs due to **±0.2 V fluctuation**.
+  - External multimeter readings confirmed that the **Waveshare power manager reliably cut off at 3.0 V**, protecting the battery from over-discharge.
+
+- **Recharging Insights**:
+  - The system recharged effectively even under **100% cloud cover**, gaining **0.4 V over 7.5 hours**.
+  - On a mostly clear day (10% cloud), recharge rate improved to **0.088 V/hour**, reaffirming the **suitability of the solar panel and power management system** for off-grid use.
+
+- **General Performance**:
+  - The combination of **low-frequency sampling (30 min intervals)** and **hardware-level power control** allowed the unit to perform as intended, with **multi-day operation** feasible between charges.
+  - These results confirm the logger is **well-suited for short-term deployments (2.5–3 days)** on battery alone, and **indefinite operation** is possible with moderate solar exposure.
+
+
+Overall, the test confirms the data logger is capable of sustained autonomous operation under real-world conditions and is suitable for deployment in field-based microclimate studies.
+
+  
 
 
 
-### Post-Test Considerations:
-- **Data Optimization**: If the battery life was shorter than expected, adjustments could be made to the data logging frequency, power-saving modes, or the selection of more energy-efficient sensors.
-- **Recharging Process**: After the battery was depleted, the time required to fully recharge the system was tested to assess recharging efficiency.
-- **Real-World Use Case**: The test could be repeated under various environmental conditions to simulate real-world scenarios, such as different seasonal temperatures or varying sunlight exposure for solar charging.
