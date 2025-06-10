@@ -112,25 +112,36 @@ def connect_to_wifi():
         log_exception_to_flash(e, "WiFi Connection")
         return None
 
+
+
 def initialize_sd_card(sd_mount="/sd1", cs_pin_num=13, spi_id=1, sck_pin_num=10, mosi_pin_num=11, miso_pin_num=12):
-    """Initialize an SD card and mount it at the specified mount point."""
+    """Attempt to initialize an SD card and mount it at the specified mount point."""
     cs = Pin(cs_pin_num, Pin.OUT)
-    spi = SPI(spi_id, baudrate=1000000, polarity=0, phase=0, bits=8,
+    baudrate = 400_000 if sd_mount == "/sd2" else 1_000_000
+    spi = SPI(spi_id, baudrate=baudrate, polarity=0, phase=0, bits=8,
               firstbit=SPI.MSB, sck=Pin(sck_pin_num),
               mosi=Pin(mosi_pin_num), miso=Pin(miso_pin_num))
+
     try:
         uos.umount(sd_mount)
         print(f"Unmounted previous SD card on {sd_mount} (if any).")
     except Exception as e:
-        # If error is EINVAL (error code 22), ignore it
         if hasattr(e, 'args') and e.args and e.args[0] == 22:
             print(f"Ignoring unmount error on {sd_mount}: {e}")
         else:
             print(f"Error unmounting SD card at {sd_mount}: {e}")
             log_exception_to_flash(e, f"Unmounting SD card at {sd_mount}")
 
-        
     try:
+        if sd_mount == "/sd2":
+            print("Toggling CS pin for /sd2 to stabilise SD card...")
+            cs.value(1)
+            time.sleep(0.1)
+            cs.value(0)
+            time.sleep(0.1)
+            cs.value(1)
+            time.sleep(0.1)
+
         sd = sdcard.SDCard(spi, cs)
         vfs = uos.VfsFat(sd)
         uos.mount(vfs, sd_mount)
@@ -142,9 +153,31 @@ def initialize_sd_card(sd_mount="/sd1", cs_pin_num=13, spi_id=1, sck_pin_num=10,
         return None
     return sd
 
+
+def initialize_first_sd_card():
+    """Initialize the first SD card with retry logic."""
+    for attempt in range(3):
+        print(f"Attempt {attempt + 1} to initialize /sd1...")
+        card = initialize_sd_card(sd_mount="/sd1", cs_pin_num=13, spi_id=1,
+                                  sck_pin_num=10, mosi_pin_num=11, miso_pin_num=12)
+        if card:
+            return card
+        time.sleep(1)
+    print("Failed to initialize /sd1 after 3 attempts.")
+    return None
+
+
 def initialize_second_sd_card():
-    """Initialize the second SD card using different pins."""
-    return initialize_sd_card(sd_mount="/sd2", cs_pin_num=1, spi_id=0, sck_pin_num=6, mosi_pin_num=7, miso_pin_num=0)
+    """Initialize the second SD card with retry logic."""
+    for attempt in range(3):
+        print(f"Attempt {attempt + 1} to initialize /sd2...")
+        card = initialize_sd_card(sd_mount="/sd2", cs_pin_num=1, spi_id=0,
+                                  sck_pin_num=6, mosi_pin_num=7, miso_pin_num=0)
+        if card:
+            return card
+        time.sleep(1)
+    print("Failed to initialize /sd2 after 3 attempts.")
+    return None
 
 def select_channel(i2c, channel):
     """Select a specific channel on the TCA9548A multiplexer."""
@@ -182,6 +215,8 @@ def log_temperature_to_sd(data_to_log, sd_directory):
         print(f"Error reading directory {sd_directory}: {e}")
         log_exception_to_flash(e, f"listdir {sd_directory}")
         return
+
+
 
     # Create the log file with a header if it does not exist.
     if 'log.csv' not in files_in_directory:
@@ -269,12 +304,12 @@ def main():
     time.sleep(2)
 
     # Initialize SD cards
-    initialize_sd_card(sd_mount="/sd1")
+    initialize_first_sd_card()
     time.sleep(1)
     initialize_second_sd_card()
     time.sleep(1)
 
-    # Set RTC alarms if RTC is available
+    # Set RTC alarms once on boot (can stay here)
     try:
         print("Setting RTC alarms for every 30 minutes...")
         rtc.alarm1.set(EVERY_HOUR, min=0, sec=0)
@@ -299,12 +334,10 @@ def main():
             else:
                 print("Voltage reading failed.")
             time.sleep(1)
-
-            # Turn off sensor power
             mosfet_gate.value(0)
             print("MOSFET OFF")
 
-            # Retrieve current datetime from RTC
+            # RTC datetime
             try:
                 _time = rtc.get_time()
                 year, month, day, hour, minute, second, _, _ = _time
@@ -315,7 +348,7 @@ def main():
                 log_exception_to_flash(e, "RTC datetime parsing")
                 datetime_str = "N/A"
 
-            # DS18B20 Temperature Reading
+            # DS18B20
             ds_temperatures = {}
             if ds_sensor:
                 try:
@@ -335,20 +368,15 @@ def main():
 
             time.sleep(1)
 
-            # SHT30 Temperature and Humidity from three channels
+            # SHT30 sensors
             shtc3_data = {}
             for channel in range(3):
                 select_channel(i2c, channel)
                 temperature, humidity = read_temperature_and_humidity(sht)
-                if temperature is not None and humidity is not None:
-                    shtc3_data[f'shtc3_temp_{channel + 1}'] = temperature
-                    shtc3_data[f'shtc3_hum_{channel + 1}'] = humidity
-                else:
-                    print(f"Failed to read SHT30 data from channel {channel + 1}")
-                    shtc3_data[f'shtc3_temp_{channel + 1}'] = 0.0
-                    shtc3_data[f'shtc3_hum_{channel + 1}'] = 0.0
+                shtc3_data[f'shtc3_temp_{channel + 1}'] = temperature if temperature is not None else 0.0
+                shtc3_data[f'shtc3_hum_{channel + 1}'] = humidity if humidity is not None else 0.0
 
-            # Prepare the data payload
+            # Prepare payload
             data = {
                 "datetime": datetime_str,
                 "temperature_ds1": ds_temperatures.get('Sensor 1', 0.0),
@@ -363,13 +391,12 @@ def main():
                 "voltage": vin if vin is not None else 0.0
             }
 
-            # Log data to both SD cards
+            # Save and send data
             log_temperature_to_sd(data, "/sd1")
             time.sleep(1)
             log_temperature_to_sd(data, "/sd2")
             time.sleep(1)
 
-            # Upload data if WiFi is connected
             if wlan and wlan.isconnected():
                 send_data_to_webhook(data)
             else:
@@ -377,25 +404,19 @@ def main():
 
             disconnect_wifi()
             time.sleep(1)
-            led.value(0)
+            
 
-            # Clear RTC alarms (or initiate deep sleep if desired)
-            try:
-                print("Clearing RTC alarms...")
-                rtc.alarm1.clear()
-                rtc.alarm2.clear()
-                print("Alarms cleared.")
-            except Exception as e:
-                print(f"Error clearing RTC alarms: {e}")
-                log_exception_to_flash(e, "Clearing RTC alarms")
+            # Clear the alarms (this powers off the system)
+            print("Clearing alarms and powering off...")
+            rtc.alarm1.clear()
+            rtc.alarm2.clear()
+            print("Both alarms cleared, system powering off...")
 
-            break  # Exit after one cycle (remove break for continuous logging)
-
-        except Exception as loop_error:
-            print(f"Error during main loop execution: {loop_error}")
-            log_exception_to_flash(loop_error, "Main loop")
-            gc.collect()
             break
+        except Exception as e:
+           print(f"Error during shutdown sequence: {e}")
+           log_exception_to_flash(e, "Shutdown sequence")
+           break
 
 if __name__ == "__main__":
     main()
